@@ -1,3 +1,4 @@
+package main;
 import java.lang.Math;
 
 public class Vector3{
@@ -10,12 +11,16 @@ public class Vector3{
         values[2] = c;
     }
 
-    public Vector3(double[] valuess){
-        this.values = valuess;
+    public Vector3(double[] values){
+        this.values = values;
     }
 
     public double[] getValues(){
         return values.clone();
+    }
+
+    public Vector3 clone(){
+        return new Vector3(values);
     }
 
     public Vector3 add(Vector3 v){
