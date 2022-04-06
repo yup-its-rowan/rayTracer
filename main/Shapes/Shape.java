@@ -5,4 +5,6 @@ public interface Shape {
     Vector3 position();
     double reflectance();
     int color();
+    double closestScalar(Vector3 o, Vector3 d);
+    void setPosition(Vector3 pos);
 }

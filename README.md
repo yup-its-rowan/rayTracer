@@ -27,9 +27,11 @@ First things first, I've gotta build a Vector class to handle all the fun intera
 I've also created a Main class that I'm gonna use (hopefully) temporarily as I make sure I can setup a display that I can control to a specificity I like. It's rather late so I'm gonna do some quick googling on setting up a BufferedImage for tomorrow. 
 
 ---
+<br>
 
 ### Day 2
-It's been a couple of real-time days since I've worked on this. I took a short bit of break while I was home for the weekend (translation, my parents wanted me to do yardwork). In the meantime, though I have come up with a good list of things to knock out so that I can even get to raytracing. The first and most important thing is for me to start working on creating an image to display, or even developing the ability for me to display an image on the screen in the first place. 
+<br>
+It's been a couple of real-time days since I've worked on this. I took a short bit of break while I was home for the weekend (translation, my parents wanted me to do yardwork). In the meantime, I have come up with a good list of things to knock out so that I can even get to raytracing. The first and most important thing is for me to start working on creating an image to display, or even developing the ability for me to display an image on the screen in the first place. 
 
 <br>
 
@@ -44,3 +46,22 @@ For my first run of the renderer, I'm not going to implement meshes. I don't thi
 A little less importantly, I've also decided to call this project "Rendel", after my friends misread a scribble on my whiteboard that was meant to say "render". Good times.
 
 ---
+<br>
+
+### Day 3
+<br>
+Another day another chip away at Rendel. My baby boy has grown so much since the last update. Hopefully, by the time this is pushed, we'll finally be able to see shapes being rendered onto the screen. Without any reflections or any depth. Today I officially gave up on working on this all by myself, but only for just a little bit. I was trying to figure out how I would work in shading, and wrote out a couple bare minimum recursive functions that worked with rays. I worked myself into this weird corner where I would have to look at every lighting source in the scene for each pixel and its corresponding shape. It felt like calculations of this amount would just be so incredibly taxing on hardware, and that there was no way a computer would be expected to keep track of layers on layers of diffusion and reflection, but turns out I was almost right and computers just do this kind of stuff on the daily. Good for them :)
+
+ <br>
+
+ Besides melting into a puddle thinking about how incredibly complex raytracing in video games is, I also worked through some more things. A lot of what happened today was through trying to put functions in places that would use them best, and also trying to optimize a little with what I have. I am genuinely a little concerned for my laptop when I run this, so I tried making some little adjustments, like trying to presort the list of shapes in order of distance from the camera and just choosing the closest shape/color. Unfortunately, that runs in to weird corner cases when shapes are within other shapes, or when the shapes are not just all spheres. If a sphere and a cube are the same size, a corner of the cube could actually be closer to the camera than the sphere is, even though its position is a little further away. 
+
+ <br>
+
+ At the end of the day, with seconds left on the clock, I managed to do what UNC could not and finished strong (reference to NCAA finals that will age poorly). After many hours of grinding out bug after bug, I was finally able to... draw a circle!!! Yay!!! Though there are undoubtedly much more efficient ways to draw a circle, this circle is my baby of a couple hours of work, and I am proud. Multiple spheres layered draw at the same time takes noticeably longer, and it is very visible when you go to make a couple dozen spheres. For now I'll stick three of them there and not think about it too much. Despite the fun I am having messing around with circles there is a slight problem with how things are displayed. For now, the x axis is horizontal as always, but the y axis is flipped. It is 2 AM and I am sure there is some easy fix, but right now is not the time to delve into that. Hopefully I can get a handle on that by tomorrow.
+
+ <br>
+
+ It is now 3 AM and I have had so much fun making my little spheres intersect that I added a little animation of spheres intersecting! :)
+
+ ---
