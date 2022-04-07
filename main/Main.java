@@ -19,6 +19,10 @@ public class Main {
     //THIS IS THE LOCATION OF THE TOP LEFT CORNER OF THE CAMERA BOX AND ONLY THAT. IT IS NOT THE MIDDLE OF THE CAMERA DO NOT BE FOOLED
     //ALSO DEFINE VALUE FOR MIDDLE OF CAMERA LATER
     public static final Vector3 cameraPosition = new Vector3(0, 0, 0);
+
+    //THIS IS THE FOCAL POSITION FOR PERSPECTIVE CAMERA
+    private static double focalLength = 3;
+    public static Vector3 focalPosition = cameraPosition.add(new Vector3(cameraWidth/2, cameraHeight/2, -focalLength));
     public static final Camera cameraState = Camera.Orthographic;
     public static enum Camera {
         Orthographic, Perspective, JustBackground;
@@ -56,7 +60,7 @@ public class Main {
             ImageFiller.fill(cameraState, createdImage, background, ShapeList.shapeAnim1());
             jframe.repaint();
             try {
-                Thread.sleep(10);
+                Thread.sleep(100);
             } catch (InterruptedException e1) {
                 e1.printStackTrace();
             }

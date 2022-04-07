@@ -8,11 +8,12 @@ public class ImageFiller {
     private static Vector3 orthoDirection = new Vector3(0, 0, 1);
 
     public static void fill(Main.Camera cameraState, BufferedImage image, Color background, List<Shape> shapes){
-        for (int i= 0; i < Main.displayWidth; i ++){
+        for (int i= 0; i < Main.displayWidth; i++){
             for (int j = 0; j < Main.displayHeight; j++){
-                image.setRGB(i, j, background.argb());
+                image.setRGB(i, Main.displayHeight-j-1, background.argb());
             }
         }
+        //i know i can make the code shorter but i would hate to debug it if things went wrong
         switch(cameraState){
             case JustBackground:
                 break;
@@ -25,12 +26,26 @@ public class ImageFiller {
                             Main.heiRat*(j+0.5) + Main.cameraPosition.getValues()[1], 
                             Main.cameraPosition.getValues()[2]), orthoDirection, shapes);
                         if (color != null){
-                            image.setRGB((int)i, (int)j, color);
+                            image.setRGB((int)i, (int)(Main.displayHeight - j-1), color);
                         }
                     }
                 }
                 break;
             case Perspective:
+                for (double i= 0; i < Main.displayWidth; i ++){
+                    for (double j = 0; j < Main.displayHeight; j++){
+                        Vector3 pixelPos = new Vector3(Main.widRat*(i+0.5) + Main.cameraPosition.getValues()[0], 
+                        Main.heiRat*(j+0.5) + Main.cameraPosition.getValues()[1], 
+                        Main.cameraPosition.getValues()[2]);
+
+                        Vector3 directionVec = pixelPos.subtract(Main.focalPosition);
+                        Integer color = rayCast(
+                            pixelPos, directionVec, shapes);
+                        if (color != null){
+                            image.setRGB((int)i, (int)(Main.displayHeight - j-1), color);
+                        }
+                    }
+                }
                 break;
         }
     }
