@@ -1,6 +1,5 @@
 package main;
 import java.awt.image.BufferedImage;
-import java.util.concurrent.ConcurrentHashMap.KeySetView;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -10,8 +9,8 @@ import java.awt.event.*;
 public class Main {
 
     //self explanatory, just some variables that are gonna be used quite a lot
-    public static final int displayWidth = 450;
-    public static final int displayHeight = 300;
+    public static final int displayWidth = 600;
+    public static final int displayHeight = 400;
     public static final double cameraWidth = 5;
     public static final double ambientConstant = 0.2;
 
@@ -30,7 +29,7 @@ public class Main {
     public static final double heiRat = cameraHeight/displayHeight;
     public static Vector3 focalPosition = cameraPosition.add(new Vector3(cameraWidth/2, cameraHeight/2, -focalLength));
     public static enum Camera {
-        Orthographic, Perspective, JustBackground;
+        Orthographic, Perspective, JustBackground {@Override public Camera next() { return values()[0];};}; public Camera next(){return values()[ordinal()+1];}
     }
     public static enum Shader { //incredibly sexy code that lets me increment things well. i wish i wrote it
         Original, Ambient, Diffusion, Specular, Phong {@Override public Shader next() { return values()[0];};}; public Shader next(){return values()[ordinal()+1];}
@@ -43,13 +42,13 @@ public class Main {
         BufferedImage createdImage = new BufferedImage(displayWidth, displayHeight, BufferedImage.TYPE_INT_ARGB);
 
         //This is temporary, basically creating an ARGB color using bit shifting so I can paint the blank BufferedImage and show that it's working
-        Color background = new Color(255, 255, 255, 0);
+        Color background = new Color(255, 255, 0);
 
         // Setting up Jframe to display the BufferedImage
         JFrame jframe = new JFrame();
         jframe.setVisible(true);
 
-        ImageFiller.fill(cameraState, shaderState, createdImage, background, ShapeList.shapes());
+        ImageFiller.fill(cameraState, shaderState, createdImage, background, ShapeList.shapes(), ShapeList.lights());
         ImageIcon icon = new ImageIcon(createdImage);
         JLabel jLabel = new JLabel(icon);
         jframe.getContentPane().add(jLabel);
@@ -72,11 +71,17 @@ public class Main {
                 if (e.getKeyChar() == ' '){
                     shaderState = shaderState.next();
                     if (displayState == Display.Pause){
-                        ImageFiller.fill(cameraState, shaderState, createdImage, background, ShapeList.shapes());
+                        ImageFiller.fill(cameraState, shaderState, createdImage, background, ShapeList.shapes(), ShapeList.lights());
                         jframe.repaint();
                     }    
                 } else if (e.getKeyChar() == ','){
                     displayState = displayState.next();
+                } else if (e.getKeyChar() == 'z'){
+                    cameraState = cameraState.next();
+                    if (displayState == Display.Pause){
+                        ImageFiller.fill(cameraState, shaderState, createdImage, background, ShapeList.shapes(), ShapeList.lights());
+                        jframe.repaint();
+                    }
                 }
             }
 
@@ -93,7 +98,7 @@ public class Main {
         while (true){
             switch (displayState){
                 case Animation:
-                    ImageFiller.fill(cameraState, shaderState, createdImage, background, ShapeList.shapeAnim1());
+                    ImageFiller.fill(cameraState, shaderState, createdImage, background, ShapeList.shapeAnim1(), ShapeList.lights());
                     jframe.repaint();
                     try {
                         Thread.sleep(500);

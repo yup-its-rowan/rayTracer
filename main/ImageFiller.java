@@ -1,13 +1,13 @@
 package main;
 import java.awt.image.BufferedImage;
 import java.util.*;
-import main.Shapes.Shape;
+import main.Shapes.*;
 
 public class ImageFiller {
 
     private static Vector3 orthoDirection = new Vector3(0, 0, 1);
 
-    public static void fill(Main.Camera cameraState, Main.Shader shaderState, BufferedImage image, Color background, List<Shape> shapes){
+    public static void fill(Main.Camera cameraState, Main.Shader shaderState, BufferedImage image, Color background, List<Shape> shapes, List<Light> lights){
         for (int i= 0; i < Main.displayWidth; i++){
             for (int j = 0; j < Main.displayHeight; j++){
                 image.setRGB(i, Main.displayHeight-j-1, background.argb());
@@ -29,14 +29,14 @@ public class ImageFiller {
                         directionVec = orthoDirection;
                         break;
                     case Perspective:
-                        directionVec = pixelPos.subtract(Main.focalPosition);
+                        directionVec = (pixelPos.subtract(Main.focalPosition)).normalized();
                         break;
                     default:
                         directionVec = orthoDirection;
                 }
                 
                 Integer color = rayCast(
-                    pixelPos, directionVec, shaderState, shapes);
+                    pixelPos, directionVec, shaderState, shapes, lights);
                 if (color != null){
                     image.setRGB((int)i, (int)(Main.displayHeight - j-1), color);
                 }
@@ -45,7 +45,7 @@ public class ImageFiller {
     }
 
     //should return the color the pixel should be
-    public static Integer rayCast(Vector3 origin, Vector3 direction, Main.Shader shaderState, List<Shape> shapes){
+    private static Integer rayCast(Vector3 origin, Vector3 direction, Main.Shader shaderState, List<Shape> shapes, List<Light> lights){
         //Color pixelColor;
         //System.out.println(Arrays.toString(origin.getValues()));
         Shape nearestShape = null;
@@ -58,23 +58,74 @@ public class ImageFiller {
             }
         }
         //make sure to call to different methods for each Phong case, so it's easier to calculate Phong separately.
+        //need to move the multiplication by constant out of the for loops. might be a ceiling problem though
         switch (shaderState){
             case Original:
                 if (nearestShape != null){
-                    return nearestShape.color();
+                    return nearestShape.getColor().argb();
                 }
                 break;
             case Ambient:
+                if (nearestShape != null){
+                    return ambientCalculator(nearestShape).argb();
+                }
                 break;
             case Diffusion:
+                if (nearestShape != null){
+                    Color temp = Color.Black;
+                    for (Light light : lights){
+                        if (doesLightShine(light, nearestShape, shapes)){
+                            temp = temp.add(diffuseCalculator(nearestShape, light, origin.add(direction.times(closestScalar))));
+                        }
+                    }
+                    return temp.argb();
+                }
                 break;
             case Specular:
+                if (nearestShape != null){
+                    Color temp = Color.Black;
+                    for (Light light : lights){
+                        if (doesLightShine(light, nearestShape, shapes)){
+                            temp = temp.add(specularCalculator(nearestShape, light, origin.add(direction.times(closestScalar))));
+                        }
+                    }
+                    return temp.argb();
+                }
                 break;
             case Phong:
+                if (nearestShape != null){
+                    Color temp = Color.Black;
+                    for (Light light : lights){
+                        if (doesLightShine(light, nearestShape, shapes)){
+                            temp = temp.add(diffuseCalculator(nearestShape, light, origin.add(direction.times(closestScalar))));
+                            temp = temp.add(specularCalculator(nearestShape, light, origin.add(direction.times(closestScalar))));
+                        }
+                    }
+                    temp = temp.add(ambientCalculator(nearestShape));
+                    return temp.argb();
+                }
                 break;
             default:
                 return null;
         }
         return null;
+    }
+
+    private static Color ambientCalculator(Shape shape){
+        return shape.getColor().times(shape.material().kA());
+    }
+
+    private static Color diffuseCalculator(Shape shape, Light light, Vector3 point){   
+        return shape.getColor().times(((light.pos().subtract(point)).normalized()).dotProduct(shape.normal(point))*shape.material().kD());
+    }
+
+    private static Color specularCalculator(Shape shape, Light light, Vector3 point){
+        Vector3 normalizedLight = (light.pos().subtract(point)).normalized();
+        Vector3 normalizedNormal = shape.normal(point);
+        return shape.getColor().times(shape.material().kS()*Math.pow((((normalizedNormal.times(2*normalizedLight.dotProduct(normalizedNormal))).subtract(normalizedLight)).normalized()).dotProduct(((Main.focalPosition.subtract(point)).normalized())), shape.material().shininess()));
+    }
+
+    private static boolean doesLightShine(Light light, Shape shape, List<Shape> shapes){
+        return true;
     }
 }

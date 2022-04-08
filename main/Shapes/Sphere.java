@@ -5,13 +5,13 @@ import main.*;
 public class Sphere implements Shape{
     private Vector3 position;
     private Material mat;
-    private int color;
+    private Color color;
     private double radius;
 
     public Sphere(Vector3 pos, double radiu, Material mat, Color col){
         position = pos;
         this.mat = mat;
-        color = col.argb();
+        color = col;
         radius = radiu;
     }
 
@@ -23,11 +23,6 @@ public class Sphere implements Shape{
     @Override
     public Material material() {
         return mat;
-    }
-
-    @Override
-    public int color() {
-        return color;
     }
 
     public double radius(){
@@ -68,6 +63,11 @@ public class Sphere implements Shape{
     public Vector3 normal(Vector3 point){
         Vector3 x = point.subtract(position);
         return x.normalized();
+    }
+
+    @Override
+    public Color getColor(){
+        return color;
     }
 
 }

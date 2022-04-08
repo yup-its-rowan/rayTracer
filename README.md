@@ -90,3 +90,16 @@ First things first, I messed with the order of the state machine a little bit in
 That went better than anticipated, and the code looks a lot better. I can also structure the different ways of shading in a similar manner as I work through Phong shading. I think that what will be easiest is to separate the three bits of Phong shading, being ambient, diffusion, and specular, into three different colors so I can see how it renders each of the lighting systems individually, and then together. Unfortunately, I've put off doing shading for the past couple hours because it is difficult and I still don't fully understand how the constants work, and have opted instead to add a bunch more customization options. Now, the animation can not only be paused, but can be cycled through different rendering implementations (that I have yet to make). I helped it along with an observer style render on the pause function so we can get some nice looking paused renders, though I'll have to redo the way I do the animations for a more stable frame rate instead of the current render/thread sleep format it is right now.
 
 ---
+<br>
+
+### Day 6
+<br>
+Alright so I finally got around to doing some lighting. Before that though, I added some more options for interacting with the variables through key presses just so its a little easier to debug. Now I don't have to change code, just gotta hit the spacebar, z key, and comma key to toggle color renderers, perspective, and pause respectively. I also changed how I do color, because if I'm being honest, I never really used the alpha channel. Now it's a little more readable and easier to create new shapes and stuff. Yay! Now onto the lighting bits.
+
+<br>
+First things first, I added a Light class to keep track of the positions of light out and about. I might add something to control intensity later but as of now everything is the same. I also added ambient light relatively easily. All I had to do was multiply the current color of the renderer by a constant dictated by the material. Next is the diffused light. The equations for both diffusion and specular illumination are straight from Wikipedia, and my implementations of that are also pretty straightforward. I would say the most difficult part is tuning things and knowing where the bugs make themselves apparent. For example, I thought that my diffusion equations were somehow backwards, but it was actually the fact that I didn't clamp the Color from going below zero, which for some reason broke everything. You live and you learn :/.
+
+<br>
+Now that I've set everything up, the Phong lighting works! There is a little problem with specular lighting though, which is creating a weird halo effect on the spheres. I don't know why its doing that but it is and it is really bothering me, mainly because it looks like the spheres are dimpled in a funky way. I suspect I forgot to normalize something, or that a dot product somewhere is acting real funky, but that's something for me to figure out later. For now, I will play with my pretty little spheres.
+
+---

@@ -62,4 +62,8 @@ public class Vector3{
     public double distance(Vector3 v){
         return Math.sqrt(Math.pow(values[0] - v.values[0], 2) + Math.pow(values[1] - v.values[1], 2) + Math.pow(values[2] - v.values[2], 2));
     }
+
+    public Vector3 flipped(){
+        return this.times(-1);
+    }
 }
