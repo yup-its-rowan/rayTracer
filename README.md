@@ -77,3 +77,11 @@ While I was doing that, I went head and unflipped my y axis. It wasn't that bad 
 
 ---
 <br>
+
+### Day 5 & Day 6
+<br>
+Yea, so I'm gonna have to break my rules a little bit. After a good long while trying out different models of lighting to absolutely no avail, I finally decided to bend my rules a little and research different kinds of lighting online, being careful to avoid any actual implementations of either that lighting or raytracing engines in general. What I found was insane. Holy mother of god I had no idea lighting was this complicated. There are so many layers. on layers. WHY CAN YOU MULTIPLY COLORS??? THAT DOESN'T EVEN MAKE ANY SENSE!!!!! I searched around some, and I think I'm going to try my hand at the Phong reflection model, pretty much only because its the most well-documented model that's been going on for quite a while now. I might have to make some alterations eventually when reflections come to play, but for now, it's fair game.
+
+<br>
+
+First things first, I messed with the order of the state machine a little bit in the ImageFiller class so I can more easily implement the new form of Phong shading while still keeping the project's original flat shading intact. 

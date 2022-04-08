@@ -8,13 +8,11 @@ import java.awt.event.*;
 public class Main {
 
     //self explanatory, just some variables that are gonna be used quite a lot
-    public static final int displayWidth = 450;
-    public static final int displayHeight = 300;
+    public static final int displayWidth = 600;
+    public static final int displayHeight = 400;
     public static final double cameraWidth = 5;
-    public static final double cameraHeight = cameraWidth*displayHeight/displayWidth;
-    public static final double widRat = cameraWidth/displayWidth;
-    public static final double heiRat = cameraHeight/displayHeight;
     public static final boolean doAnimation = true;
+    public static final double ambientConstant = 0.2;
 
     //THIS IS THE LOCATION OF THE TOP LEFT CORNER OF THE CAMERA BOX AND ONLY THAT. IT IS NOT THE MIDDLE OF THE CAMERA DO NOT BE FOOLED
     //ALSO DEFINE VALUE FOR MIDDLE OF CAMERA LATER
@@ -22,8 +20,12 @@ public class Main {
 
     //THIS IS THE FOCAL POSITION FOR PERSPECTIVE CAMERA
     private static double focalLength = 3;
+    public static final Camera cameraState = Camera.Perspective;
+
+    public static final double cameraHeight = cameraWidth*displayHeight/displayWidth;
+    public static final double widRat = cameraWidth/displayWidth;
+    public static final double heiRat = cameraHeight/displayHeight;
     public static Vector3 focalPosition = cameraPosition.add(new Vector3(cameraWidth/2, cameraHeight/2, -focalLength));
-    public static final Camera cameraState = Camera.Orthographic;
     public static enum Camera {
         Orthographic, Perspective, JustBackground;
     }

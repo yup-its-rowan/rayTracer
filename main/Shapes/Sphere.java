@@ -1,17 +1,18 @@
 package main.Shapes;
+
 import main.*;
 
 public class Sphere implements Shape{
     private Vector3 position;
-    private double reflectance;
+    private Material mat;
     private int color;
     private double radius;
 
-    public Sphere(Vector3 pos, double rad, double ref, Color col){
+    public Sphere(Vector3 pos, double radiu, Material mat, Color col){
         position = pos;
-        reflectance = ref;
+        this.mat = mat;
         color = col.argb();
-        radius = rad;
+        radius = radiu;
     }
 
     @Override
@@ -20,8 +21,8 @@ public class Sphere implements Shape{
     }
 
     @Override
-    public double reflectance() {
-        return reflectance;
+    public Material material() {
+        return mat;
     }
 
     @Override
@@ -62,6 +63,11 @@ public class Sphere implements Shape{
     @Override
     public void setPosition(Vector3 pos) {
         position = pos;
+    }
+
+    public Vector3 normal(Vector3 point){
+        Vector3 x = point.subtract(position);
+        return x.normalized();
     }
 
 }
