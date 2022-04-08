@@ -78,10 +78,15 @@ While I was doing that, I went head and unflipped my y axis. It wasn't that bad 
 ---
 <br>
 
-### Day 5 & Day 6
+### Day 5
 <br>
 Yea, so I'm gonna have to break my rules a little bit. After a good long while trying out different models of lighting to absolutely no avail, I finally decided to bend my rules a little and research different kinds of lighting online, being careful to avoid any actual implementations of either that lighting or raytracing engines in general. What I found was insane. Holy mother of god I had no idea lighting was this complicated. There are so many layers. on layers. WHY CAN YOU MULTIPLY COLORS??? THAT DOESN'T EVEN MAKE ANY SENSE!!!!! I searched around some, and I think I'm going to try my hand at the Phong reflection model, pretty much only because its the most well-documented model that's been going on for quite a while now. I might have to make some alterations eventually when reflections come to play, but for now, it's fair game.
 
 <br>
 
-First things first, I messed with the order of the state machine a little bit in the ImageFiller class so I can more easily implement the new form of Phong shading while still keeping the project's original flat shading intact. 
+First things first, I messed with the order of the state machine a little bit in the ImageFiller class so I can more easily implement the new form of Phong shading while still keeping the project's original flat shading intact.
+
+<br>
+That went better than anticipated, and the code looks a lot better. I can also structure the different ways of shading in a similar manner as I work through Phong shading. I think that what will be easiest is to separate the three bits of Phong shading, being ambient, diffusion, and specular, into three different colors so I can see how it renders each of the lighting systems individually, and then together. Unfortunately, I've put off doing shading for the past couple hours because it is difficult and I still don't fully understand how the constants work, and have opted instead to add a bunch more customization options. Now, the animation can not only be paused, but can be cycled through different rendering implementations (that I have yet to make). I helped it along with an observer style render on the pause function so we can get some nice looking paused renders, though I'll have to redo the way I do the animations for a more stable frame rate instead of the current render/thread sleep format it is right now.
+
+---
