@@ -1,6 +1,17 @@
 # rayTracer
 
-a little project to demo custom raytracing by Rohan Akki
+a little project to demo raytracing by Rohan Akki
+<br>
+<br>
+<br>
+
+Controls are  
+<br>
+spacebar - toggles modes of lighting (ambient, diffusion, etc)  
+z        - toggles modes of camera (orthographic, perspective)  
+,        - toggles pausing the animation  
+<br>
+Everything displayed is contained in the ShapeList.java file, and is pretty easy to set up and move around. Most stuff is commented
 <br>
 <br>
 <br>
@@ -103,3 +114,11 @@ First things first, I added a Light class to keep track of the positions of ligh
 Now that I've set everything up, the Phong lighting works! There is a little problem with specular lighting though, which is creating a weird halo effect on the spheres. I don't know why its doing that but it is and it is really bothering me, mainly because it looks like the spheres are dimpled in a funky way. I suspect I forgot to normalize something, or that a dot product somewhere is acting real funky, but that's something for me to figure out later. For now, I will play with my pretty little spheres.
 
 ---
+<br>
+
+### Day 7
+<br>
+Unfortunately for all two people reading this (hey dad), I think this project is as done as its ever gonna be. I set out with the goal of rendering with raytracing and now I can for sure say that I have achieved it, if a little less complex as I would have originally liked. Though there is a lot of room for growth in this project, whether it be reflections or meshes or anti aliasing, this has taken up a significant amount of my week and I have other things I should spend time on, like my midterm in three days. I had a lot of fun working through all the kinks of the project and all the little funky bits of code and bugs, translating math into something visual, but now that I've cleaned up all the artifacts, I think this is the end of Rendel. Thanks for reading, and I hope to do something like this again in the future.
+
+<br>
+Cheers!

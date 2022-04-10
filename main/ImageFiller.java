@@ -59,6 +59,8 @@ public class ImageFiller {
         }
         //make sure to call to different methods for each Phong case, so it's easier to calculate Phong separately.
         //need to move the multiplication by constant out of the for loops. might be a ceiling problem though
+        //need to fix phong by combining specular and diffusion
+        
         switch (shaderState){
             case Original:
                 if (nearestShape != null){
@@ -122,7 +124,11 @@ public class ImageFiller {
     private static Color specularCalculator(Shape shape, Light light, Vector3 point){
         Vector3 normalizedLight = (light.pos().subtract(point)).normalized();
         Vector3 normalizedNormal = shape.normal(point);
-        return shape.getColor().times(shape.material().kS()*Math.pow((((normalizedNormal.times(2*normalizedLight.dotProduct(normalizedNormal))).subtract(normalizedLight)).normalized()).dotProduct(((Main.focalPosition.subtract(point)).normalized())), shape.material().shininess()));
+        //Vector3 r = ((normalizedNormal.times(2*(normalizedLight.dotProduct(normalizedNormal)))).subtract(normalizedLight)).normalized();
+        //Vector3 v = (Main.focalPosition.subtract(point)).normalized();
+        //double variables = Math.pow(Math.max(v.dotProduct(r),0), shape.material().shininess()) * shape.material().kS();
+        //return shape.getColor().times(variables);
+        return shape.getColor().times(shape.material().kS()*Math.pow(Math.max((((normalizedNormal.times(2*normalizedLight.dotProduct(normalizedNormal))).subtract(normalizedLight)).normalized()).dotProduct(((Main.focalPosition.subtract(point)).normalized())), 0), shape.material().shininess()));
     }
 
     private static boolean doesLightShine(Light light, Shape shape, List<Shape> shapes){

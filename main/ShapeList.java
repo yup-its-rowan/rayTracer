@@ -4,7 +4,7 @@ import main.Shapes.*;
 
 public class ShapeList {
     //ambient, diffuse, specular
-    public static Material mat = new Material(0.2, 0.5, 0.7, 30);
+    public static Material mat = new Material(0.2, 0.5, 0.7, 50);
     private static List<Shape> shapeList = new ArrayList<>(Arrays.asList(
         new Sphere(new Vector3(1, 1, 3), 0.5, mat, new Color(0, 0, 255)),
         new Sphere(new Vector3(2, 2, 4), 0.55, mat, new Color(0, 255, 255)),
@@ -13,8 +13,8 @@ public class ShapeList {
     ));
 
     private static List<Light> lightList = new ArrayList<>(Arrays.asList(
-        new Light(2.5,0,1)
-    
+        new Light(4,3,1)
+        , new Light(1, 1, 1)
 
     )){};
 

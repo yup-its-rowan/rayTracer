@@ -45,7 +45,7 @@ public class Main {
         Color background = new Color(255, 255, 0);
 
         // Setting up Jframe to display the BufferedImage
-        JFrame jframe = new JFrame();
+        JFrame jframe = new JFrame("Rendel");
         jframe.setVisible(true);
 
         ImageFiller.fill(cameraState, shaderState, createdImage, background, ShapeList.shapes(), ShapeList.lights());

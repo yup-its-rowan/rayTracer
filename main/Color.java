@@ -34,9 +34,4 @@ public class Color {
     private int round(double a){
         return (int) (a+0.5);
     }
-
-    //huge mistake not using a double or a float or something to keep the color values ;c
-    public Color multiply(Color color){
-        return new Color(round(((double)r*color.getR())/255), round(((double)g*color.getG())/255), round(((double)b*color.getB())/255));
-    }
 }
